@@ -4,7 +4,9 @@
   "description": "a javascript library for manipulating schemaorg style jsonld files",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha",
+    "cover": "istanbul cover _mocha",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -19,5 +21,15 @@
   "bugs": {
     "url": "https://github.com/kevinxin90/schemaorg.js/issues"
   },
-  "homepage": "https://github.com/kevinxin90/schemaorg.js#readme"
+  "homepage": "https://github.com/kevinxin90/schemaorg.js#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "load-json-file": "^6.2.0",
+    "mocha": "^6.2.2"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.8",
+    "istanbul": "^0.4.5",
+    "mocha-lcov-reporter": "^1.3.0"
+  }
 }
