@@ -114,6 +114,17 @@ describe("BioThings Schema Parser", function() {
             expect(parents).to.be.an('array').that.does.not.includes('Thing')
             children = Array.from(nodes['RnaProduct'].children);
             expect(children).to.be.an('array').that.includes('RnaProductIsoform');
-        })
+        });
+        it("correct class property relationship should be captured", async function() {
+            let se_tree = await parser.load_schema_into_tree();
+            let nodes = se_tree.nodes;
+            let properties = Array.from(nodes['Gene'].properties);
+            expect(properties).to.be.an('array').that.includes('entrez');
+            expect(properties).to.be.an('array').that.includes('hgnc');
+            expect(properties).to.be.an('array').that.includes('pharmgkb');
+            expect(properties).to.be.an('array').that.includes('geneAssociatedWithVariant');
+            expect(properties).to.be.an('array').that.does.not.includes('hasProteinStructure');
+            expect(properties).to.be.an('array').that.does.not.includes('inComplexWith');
+        });
     })
 })

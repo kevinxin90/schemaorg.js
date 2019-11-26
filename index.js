@@ -1,7 +1,7 @@
 const loadJsonFile = require('load-json-file');
 const Tree = require('./tree').Tree;
 const node = require('./tree').Node;
-const removePrefix = require('./utils').removePrefix;
+const utils = require('./utils');
 
 exports.Parser = class {
     constructor() {
@@ -63,8 +63,17 @@ exports.Parser = class {
                 if ((! (name in nodes)) && element["@type"] == "rdfs:Class") {
                     nodes[name] = new node(name);
                 } 
+                if (element["@type"] == "rdf:Property") {
+                    let domains = utils.extractClassNames(element["schema:domainIncludes"]);
+                    domains.forEach(domain => {
+                        if (! (domain in nodes)) {
+                            nodes[domain] = new node(domain);
+                        }
+                        nodes[domain].add_property(name);
+                    })
+                };
                 if ('rdfs:subClassOf' in element) {
-                    let parent_name = removePrefix(element["rdfs:subClassOf"]["@id"]);
+                    let parent_name = utils.removePrefix(element["rdfs:subClassOf"]["@id"]);
                     nodes[name].add_parent(parent_name);
                     if (! (parent_name in nodes)) {
                         let parent_obj = new node(parent_name);

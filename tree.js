@@ -3,6 +3,7 @@ exports.Node = class {
     constructor(name) {
         this.children = new Set();
         this.parents = new Set();
+        this.properties = new Set();
         this.name = name;
     }
 
@@ -12,6 +13,10 @@ exports.Node = class {
 
     add_parent(parent) {
         this.parents.add(parent);
+    }
+
+    add_property(prop) {
+        this.properties.add(prop);
     }
 }
 

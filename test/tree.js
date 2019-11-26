@@ -52,6 +52,16 @@ describe("Test Node Constructor", function() {
             assert(gene.children.has('Transcript'));
         });
     });
+    describe("add property", function() {
+        it("test a property is correctly added", function() {            
+            let gene = new node('Gene');
+            gene.add_property('ensembl');
+            assert(gene.properties.has('ensembl'));
+            gene.add_property('hgnc');
+            assert(gene.properties.has('hgnc'));
+            assert(gene.properties.has('ensembl'));
+        });
+    });
 });
 
 describe("Test Tree Constructor", function() {
