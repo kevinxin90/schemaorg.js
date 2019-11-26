@@ -24,6 +24,7 @@
   "homepage": "https://github.com/kevinxin90/schemaorg.js#readme",
   "dependencies": {
     "chai": "^4.2.0",
+    "jsnetworkx": "^0.3.4",
     "load-json-file": "^6.2.0",
     "mocha": "^6.2.2"
   },
