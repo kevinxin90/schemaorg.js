@@ -60,7 +60,7 @@ exports.Parser = class {
             let nodes = {};
             this.schema["@graph"].forEach(element => {
                 let name = element["rdfs:label"];
-                if (! (name in nodes)) {
+                if ((! (name in nodes)) && element["@type"] == "rdfs:Class") {
                     nodes[name] = new node(name);
                 } 
                 if ('rdfs:subClassOf' in element) {
