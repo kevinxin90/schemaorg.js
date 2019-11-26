@@ -95,6 +95,12 @@ describe("BioThings Schema Parser", function() {
             assert('Pathway' in nodes);
             assert('Thing' in nodes);
         });
+        it("properties should not be included", async function() {
+            let se_tree = await parser.load_schema_into_tree();
+            let nodes = se_tree.nodes;
+            nodes = Array.from(Object.keys(nodes));
+            expect(nodes).to.be.an('array').that.does.not.include('metabolizedBy');
+        });
         it("correct parent child relationship should be captured", async function() {
             let se_tree = await parser.load_schema_into_tree();
             let nodes = se_tree.nodes;
