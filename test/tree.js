@@ -92,12 +92,12 @@ describe("Test Tree Constructor", function() {
             se.add_node(node3);
             se.add_node(node4);
             se.add_node(node5);
-            let ancestors = Array.from(se.find_ancestores('Gene'));
-            expect(ancestors).to.be.an('array').that.includes('GeneOrGeneProduct');
-            expect(ancestors).to.be.an('array').that.includes('BiologicalEntity');
-            expect(ancestors).to.be.an('array').that.includes('Thing');
-            expect(ancestors).to.be.an('array').that.does.not.includes('Random');
-            expect(ancestors).to.be.an('array').that.does.not.includes('Gene');
+            let properties = Array.from(se.find_ancestores('Gene'));
+            expect(properties).to.be.an('array').that.includes('GeneOrGeneProduct');
+            expect(properties).to.be.an('array').that.includes('BiologicalEntity');
+            expect(properties).to.be.an('array').that.includes('Thing');
+            expect(properties).to.be.an('array').that.does.not.includes('Random');
+            expect(properties).to.be.an('array').that.does.not.includes('Gene');
         })
     })
 
@@ -123,6 +123,37 @@ describe("Test Tree Constructor", function() {
             expect(descendants).to.be.an('array').that.includes('Gene');
             expect(descendants).to.be.an('array').that.does.not.includes('Random');
             expect(descendants).to.be.an('array').that.does.not.includes('Thing');
+        })
+    })
+
+    describe("test get properties", function() {
+        it("Returns all properties which apply to a specific node", function() {
+            let se = new tree();
+            let node1 = new node('Gene');
+            let node2 = new node('GeneOrGeneProduct');
+            let node3 = new node('BiologicalEntity');
+            let node4 = new node('Thing');
+            let node5 = new node('Random');
+            node1.add_parent('GeneOrGeneProduct');
+            node2.add_parent('BiologicalEntity');
+            node2.add_parent('Thing');
+            node2.add_property('uniprot');
+            node2.add_property('inPathwayWith');
+            node4.add_property('name');
+            node4.add_property('description');
+            node1.add_property('entrez');
+            node5.add_property('test');
+            se.add_node(node1);
+            se.add_node(node2);
+            se.add_node(node3);
+            se.add_node(node4);
+            se.add_node(node5);
+            let properties = Array.from(se.find_properties('Gene'));
+            expect(properties).to.be.an('array').that.includes('uniprot');
+            expect(properties).to.be.an('array').that.includes('inPathwayWith');
+            expect(properties).to.be.an('array').that.includes('name');
+            expect(properties).to.be.an('array').that.includes('entrez');
+            expect(properties).to.be.an('array').that.does.not.includes('test');
         })
     })
 });

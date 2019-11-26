@@ -60,4 +60,20 @@ exports.Tree = class {
         }
     }
 
+    find_properties(node_name, properties=new Set()) {
+        if (!(node_name in this.nodes)) {
+            return properties;
+        } else {
+            let parents = this.nodes[node_name].parents;
+            let current_props = this.nodes[node_name].properties;
+            properties = new Set([...properties, ...current_props]);
+            if (!(parents.size === 0)) {
+                parents.forEach(parent => {
+                    properties = this.find_properties(parent, properties);
+                })
+            }
+            return properties;
+        }
+    }
+
 }
