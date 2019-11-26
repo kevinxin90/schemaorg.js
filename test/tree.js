@@ -75,4 +75,54 @@ describe("Test Tree Constructor", function() {
             expect(se.nodes['Gene']).to.equal(gene);
         });
     });
+
+    describe("test get ancestores", function() {
+        it("Returns all ancestor nodes having a path to source node in the tree", function() {
+            let se = new tree();
+            let node1 = new node('Gene');
+            let node2 = new node('GeneOrGeneProduct');
+            let node3 = new node('BiologicalEntity');
+            let node4 = new node('Thing');
+            let node5 = new node('Random');
+            node1.add_parent('GeneOrGeneProduct');
+            node2.add_parent('BiologicalEntity');
+            node2.add_parent('Thing');
+            se.add_node(node1);
+            se.add_node(node2);
+            se.add_node(node3);
+            se.add_node(node4);
+            se.add_node(node5);
+            let ancestors = Array.from(se.find_ancestores('Gene'));
+            expect(ancestors).to.be.an('array').that.includes('GeneOrGeneProduct');
+            expect(ancestors).to.be.an('array').that.includes('BiologicalEntity');
+            expect(ancestors).to.be.an('array').that.includes('Thing');
+            expect(ancestors).to.be.an('array').that.does.not.includes('Random');
+            expect(ancestors).to.be.an('array').that.does.not.includes('Gene');
+        })
+    })
+
+    describe("test get descendants", function() {
+        it("Returns all descendant nodes having a path to source node in the tree", function() {
+            let se = new tree();
+            let node1 = new node('Gene');
+            let node2 = new node('GeneOrGeneProduct');
+            let node3 = new node('BiologicalEntity');
+            let node4 = new node('Thing');
+            let node5 = new node('Random');
+            node4.add_child('BiologicalEntity');
+            node4.add_child('GeneOrGeneProduct');
+            node3.add_child('Gene');
+            se.add_node(node1);
+            se.add_node(node2);
+            se.add_node(node3);
+            se.add_node(node4);
+            se.add_node(node5);
+            let descendants = Array.from(se.find_descendants('Thing'));
+            expect(descendants).to.be.an('array').that.includes('GeneOrGeneProduct');
+            expect(descendants).to.be.an('array').that.includes('BiologicalEntity');
+            expect(descendants).to.be.an('array').that.includes('Gene');
+            expect(descendants).to.be.an('array').that.does.not.includes('Random');
+            expect(descendants).to.be.an('array').that.does.not.includes('Thing');
+        })
+    })
 });

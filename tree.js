@@ -30,4 +30,34 @@ exports.Tree = class {
         this.nodes[node_obj.name] = node_obj;
     }
 
+    find_ancestores(node_name, ancestors=new Set()) {
+        if (!(node_name in this.nodes)) {
+            return ancestors;
+        } else {
+            let parents = this.nodes[node_name].parents;
+            if (!(parents.size === 0)) {
+                parents.forEach(parent => {
+                    ancestors.add(parent);
+                    ancestors = this.find_ancestores(parent, ancestors);
+                })
+            }
+            return ancestors;
+        }
+    }
+
+    find_descendants(node_name, descendants=new Set()) {
+        if (!(node_name in this.nodes)) {
+            return descendants;
+        } else {
+            let children = this.nodes[node_name].children;
+            if (!(children.size === 0)) {
+                children.forEach(child => {
+                    descendants.add(child);
+                    descendants = this.find_descendants(child, descendants);
+                })
+            }
+            return descendants;
+        }
+    }
+
 }
