@@ -60,13 +60,13 @@ exports.Parser = class {
             let nodes = {};
             this.schema["@graph"].forEach(element => {
                 let name = element["rdfs:label"];
-                if ((! (name in nodes)) && element["@type"] == "rdfs:Class") {
+                if ((!(name in nodes)) && element["@type"] == "rdfs:Class") {
                     nodes[name] = new node(name);
                 } 
                 if (element["@type"] == "rdf:Property") {
                     let domains = utils.extractClassNames(element["schema:domainIncludes"]);
                     domains.forEach(domain => {
-                        if (! (domain in nodes)) {
+                        if (!(domain in nodes)) {
                             nodes[domain] = new node(domain);
                         }
                         nodes[domain].add_property(name);
@@ -89,6 +89,33 @@ exports.Parser = class {
         } else {
             await this.load_json();
             return this.load_schema_into_tree();
+        }
+    }
+
+    async find_properties(node_name) {
+        if (typeof this.se_tree != 'undefined') {
+            return this.se_tree.find_properties(node_name)
+        } else {
+            await this.load_schema_into_tree();
+            return this.find_properties(node_name)
+        }
+    }
+
+    async find_ancestors(node_name) {
+        if (typeof this.se_tree != 'undefined') {
+            return this.se_tree.find_ancestors(node_name)
+        } else {
+            await this.load_schema_into_tree();
+            return this.find_ancestors(node_name)
+        }
+    }
+
+    async find_descendants(node_name) {
+        if (typeof this.se_tree != 'undefined') {
+            return this.se_tree.find_descendants(node_name)
+        } else {
+            await this.load_schema_into_tree();
+            return this.find_descendants(node_name)
         }
     }
 }
