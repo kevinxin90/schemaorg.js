@@ -148,7 +148,14 @@ describe("BioThings Schema Parser", function() {
         it("return all descendants of a specific node", async function() {
             let descendants = Array.from(await parser.find_descendants('Thing'));
             expect(descendants).to.be.an('array').that.includes('Gene');
-
+        });
+    });
+    describe("get properties", async function() {
+        it("return all descendants of a specific node", async function() {
+            let parser1 = new ps();
+            let properties = Array.from(await parser1.find_properties('Gene'));
+            expect(properties).to.be.an('array').that.includes('hgnc');
+            expect(properties).to.be.an('array').that.includes('ensembl');
         });
     });
 })
