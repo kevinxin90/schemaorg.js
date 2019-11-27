@@ -96,7 +96,7 @@ exports.Parser = class {
     }
 
     async find_properties(node_name) {
-        if (typeof this.se_tree != 'undefined') {
+        if (typeof this.se_tree !== 'undefined') {
             return this.se_tree.find_properties(node_name)
         } else {
             await this.load_schema_into_tree();
@@ -105,8 +105,9 @@ exports.Parser = class {
     }
 
     async find_ancestors(node_name) {
-        if (typeof this.se_tree != 'undefined') {
-            return this.se_tree.find_ancestors(node_name)
+        if (typeof this.se_tree !== 'undefined') {
+            let se_tree = this.se_tree;
+            return se_tree.find_ancestors(node_name)
         } else {
             await this.load_schema_into_tree();
             return this.find_ancestors(node_name)
@@ -114,7 +115,7 @@ exports.Parser = class {
     }
 
     async find_descendants(node_name) {
-        if (typeof this.se_tree != 'undefined') {
+        if (typeof this.se_tree !== 'undefined') {
             return this.se_tree.find_descendants(node_name)
         } else {
             await this.load_schema_into_tree();

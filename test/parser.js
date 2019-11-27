@@ -138,14 +138,17 @@ describe("BioThings Schema Parser", function() {
         });
     });
     describe("get ancestors", async function() {
-        let se_tree = await parser.load_schema_into_tree();
         it("return all ancestors of a specific node", async function() {
-            let gene_props = Array.from(se_tree.get_properties('Gene'));
-            expect(properties).to.be.an('array').that.includes('entrez');
-            expect(properties).to.be.an('array').that.includes('hgnc');
-            expect(properties).to.be.an('array').that.includes('ensembl');
-            expect(properties).to.be.an('array').that.includes('refseq');
-            expect(properties).to.be.an('array').that.does.not.includes('interactingDrug');
+            let parser1 = new ps();
+            let ancestors = Array.from(await parser1.find_ancestors('Gene'));
+            expect(ancestors).to.be.an('array').that.includes('Thing');
+        });
+    });
+    describe("get descendants", async function() {
+        it("return all descendants of a specific node", async function() {
+            let descendants = Array.from(await parser.find_descendants('Thing'));
+            expect(descendants).to.be.an('array').that.includes('Gene');
+
         });
     });
 })

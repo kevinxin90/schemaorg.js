@@ -30,7 +30,7 @@ exports.Tree = class {
         this.nodes[node_obj.name] = node_obj;
     }
 
-    find_ancestores(node_name, ancestors=new Set()) {
+    find_ancestors(node_name, ancestors=new Set()) {
         if (!(node_name in this.nodes)) {
             return ancestors;
         } else {
@@ -38,7 +38,7 @@ exports.Tree = class {
             if (!(parents.size === 0)) {
                 parents.forEach(parent => {
                     ancestors.add(parent);
-                    ancestors = this.find_ancestores(parent, ancestors);
+                    ancestors = this.find_ancestors(parent, ancestors);
                 })
             }
             return ancestors;

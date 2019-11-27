@@ -92,7 +92,7 @@ describe("Test Tree Constructor", function() {
             se.add_node(node3);
             se.add_node(node4);
             se.add_node(node5);
-            let properties = Array.from(se.find_ancestores('Gene'));
+            let properties = Array.from(se.find_ancestors('Gene'));
             expect(properties).to.be.an('array').that.includes('GeneOrGeneProduct');
             expect(properties).to.be.an('array').that.includes('BiologicalEntity');
             expect(properties).to.be.an('array').that.includes('Thing');
@@ -103,7 +103,7 @@ describe("Test Tree Constructor", function() {
             let se = new tree();
             let node1 = new node('Gene');
             se.add_node(node1);
-            let ancestors = se.find_ancestores('Gene1');
+            let ancestors = se.find_ancestors('Gene1');
             expect(ancestors).to.have.lengthOf(0);
         })
     })
