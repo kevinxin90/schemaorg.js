@@ -48,6 +48,9 @@ describe("BioThings Schema Parser", function() {
             expect(all_properties).to.be.an('array').that.includes('ensembl');
             expect(all_properties).to.be.an('array').that.includes('hgnc');
             expect(all_properties).to.be.an('array').that.includes('metabolizedBy');
+            all_properties.forEach(element => {
+                assert(typeof item !== undefined)
+            })
         });
         it("test if schema has not been pre-loaded", async function() {
             parser1 = new ps();
@@ -67,17 +70,23 @@ describe("BioThings Schema Parser", function() {
     describe("List all IDs defined in schema", function() {
         it("ids should include ensembl, hgnc, etc", async function() {
             let all_ids = await parser.fetch_all_ids();
+            all_ids = Array.from(all_ids);
             expect(all_ids).to.be.an('array').that.includes('ensembl');
             expect(all_ids).to.be.an('array').that.includes('hgnc');
+            all_ids.forEach(element => {
+                assert(typeof item !== undefined)
+            })
         });
         it("test if schema has not been pre-loaded", async function() {
             parser1 = new ps();
             let all_ids = await parser1.fetch_all_ids();
+            all_ids = Array.from(all_ids);
             expect(all_ids).to.be.an('array').that.includes('ensembl');
             expect(all_ids).to.be.an('array').that.includes('hgnc');
         });
         it("ids should not inclue classes or other non-id values", async function() {
             let all_ids = await parser.fetch_all_ids();
+            all_ids = Array.from(all_ids);
             expect(all_ids).to.be.an('array').that.does.not.include('Gene');
             expect(all_ids).to.be.an('array').that.does.not.include('bts:ensembl');
             expect(all_ids).to.be.an('array').that.does.not.include('SequenceVariant');
@@ -123,6 +132,7 @@ describe("BioThings Schema Parser", function() {
             expect(properties).to.be.an('array').that.includes('hgnc');
             expect(properties).to.be.an('array').that.includes('pharmgkb');
             expect(properties).to.be.an('array').that.includes('geneAssociatedWithVariant');
+            expect(properties).to.be.an('array').that.does.not.includes('ensembl');
             expect(properties).to.be.an('array').that.does.not.includes('hasProteinStructure');
             expect(properties).to.be.an('array').that.does.not.includes('inComplexWith');
         });

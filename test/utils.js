@@ -17,5 +17,12 @@ describe("Extract class names from domainIncludes", function() {
         expect(res).to.be.an('array').that.includes('GeneOrGeneProduct');
         expect(res).to.be.an('array').that.includes('Transcript');
         expect(res).to.be.an('array').that.does.not.includes('bts:Transcript');
-    })
+    });
+    it("extreact classes if it is an object", function() {
+        let _input = {"@id": "bts:GeneOrGeneProduct"};
+        let res = extractClassNames(_input);
+        expect(res).to.be.an('array').of.lengthOf(1);
+        expect(res).to.be.an('array').that.includes('GeneOrGeneProduct');
+        expect(res).to.be.an('array').that.does.not.includes('bts:GeneOrGeneProduct');
+    });
 })
