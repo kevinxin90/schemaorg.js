@@ -126,5 +126,16 @@ describe("BioThings Schema Parser", function() {
             expect(properties).to.be.an('array').that.does.not.includes('hasProteinStructure');
             expect(properties).to.be.an('array').that.does.not.includes('inComplexWith');
         });
-    })
+    });
+    describe("get ancestors", async function() {
+        let se_tree = await parser.load_schema_into_tree();
+        it("return all ancestors of a specific node", async function() {
+            let gene_props = Array.from(se_tree.get_properties('Gene'));
+            expect(properties).to.be.an('array').that.includes('entrez');
+            expect(properties).to.be.an('array').that.includes('hgnc');
+            expect(properties).to.be.an('array').that.includes('ensembl');
+            expect(properties).to.be.an('array').that.includes('refseq');
+            expect(properties).to.be.an('array').that.does.not.includes('interactingDrug');
+        });
+    });
 })
