@@ -1,5 +1,5 @@
 {
-  "name": "schemaorg",
+  "name": "biothings_schema",
   "version": "0.0.1",
   "description": "a javascript library for manipulating schemaorg style jsonld files",
   "main": "index.js",
@@ -14,7 +14,8 @@
   },
   "keywords": [
     "schemaorg",
-    "jsonld"
+    "jsonld",
+    "tree"
   ],
   "author": "jiwen xin",
   "license": "ISC",
