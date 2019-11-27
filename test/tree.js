@@ -99,6 +99,13 @@ describe("Test Tree Constructor", function() {
             expect(properties).to.be.an('array').that.does.not.includes('Random');
             expect(properties).to.be.an('array').that.does.not.includes('Gene');
         })
+        it("Return empty set if given node is not in the tree", function() {
+            let se = new tree();
+            let node1 = new node('Gene');
+            se.add_node(node1);
+            let ancestors = se.find_ancestores('Gene1');
+            expect(ancestors).to.have.lengthOf(0);
+        })
     })
 
     describe("test get descendants", function() {
@@ -123,6 +130,13 @@ describe("Test Tree Constructor", function() {
             expect(descendants).to.be.an('array').that.includes('Gene');
             expect(descendants).to.be.an('array').that.does.not.includes('Random');
             expect(descendants).to.be.an('array').that.does.not.includes('Thing');
+        })
+        it("Return empty set if given node is not in the tree", function() {
+            let se = new tree();
+            let node1 = new node('Gene');
+            se.add_node(node1);
+            let descendants = se.find_descendants('Gene1');
+            expect(descendants).to.have.lengthOf(0);
         })
     })
 
@@ -154,6 +168,13 @@ describe("Test Tree Constructor", function() {
             expect(properties).to.be.an('array').that.includes('name');
             expect(properties).to.be.an('array').that.includes('entrez');
             expect(properties).to.be.an('array').that.does.not.includes('test');
+        })
+        it("Return empty set if given node is not in the tree", function() {
+            let se = new tree();
+            let node1 = new node('Gene');
+            se.add_node(node1);
+            let properties = se.find_properties('Gene1');
+            expect(properties).to.have.lengthOf(0);
         })
     })
 });
