@@ -2,10 +2,11 @@ const loadJsonFile = require('load-json-file');
 const Tree = require('./tree').Tree;
 const node = require('./tree').Node;
 const utils = require('./utils');
+const path = require('path');
 
 exports.Parser = class {
     constructor() {
-        this.path = './schemas/biothings/biothings_curie_kevin.jsonld';
+        this.path = path.join(__dirname, 'schemas/biothings/biothings_curie_kevin.jsonld');
     };
 
     async load_json() {
@@ -41,16 +42,18 @@ exports.Parser = class {
 
     async fetch_all_ids() {
         if (typeof this.schema !== 'undefined') {
-            return this.schema["@graph"].map(function(item) {
+            let ids = new Set();
+            this.schema["@graph"].forEach(item => {
                 if (item['@type'] == 'rdf:Property'
                     && 'rdfs:subPropertyOf' in item
                     && item['rdfs:subPropertyOf']['@id'] == 'http://schema.org/identifier'){
-                    return item['rdfs:label']
+                    ids.add(item['rdfs:label'])
                 }
             });
+            return ids;
         } else {
             await this.load_json();
-            return this.fetch_all_properties();
+            return this.fetch_all_ids();
         }
     }
 
